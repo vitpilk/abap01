@@ -1,0 +1,68 @@
+*&---------------------------------------------------------------------*
+*& Report Z_VP_INTERNALTABLE02 - Internal table with Header Line
+*&---------------------------------------------------------------------*
+
+REPORT z_vp_internaltable02.
+
+TABLES: zemployees.
+
+*Internal table with Header Line
+DATA: BEGIN OF itab01 OCCURS 0,
+        employee LIKE zemployees-employee,
+        surname  LIKE zemployees-surname,
+        forename LIKE zemployees-forename,
+        title    LIKE zemployees-title,
+        dob      LIKE zemployees-dob,
+        los      TYPE i VALUE 3,
+      END OF itab01.
+
+**Array fetch - all rows with data populate itab01 at once - all in one go
+*select * FROM zemployees
+*  into CORRESPONDING FIELDS OF table itab01.
+
+* is this a loop?
+SELECT * FROM zemployees.
+  MOVE zemployees-employee TO itab01-employee.
+  MOVE zemployees-surname TO itab01-surname.
+  MOVE zemployees-forename TO itab01-forename.
+  MOVE zemployees-title TO itab01-title.
+  MOVE zemployees-dob TO itab01-dob.
+
+  APPEND itab01.
+ENDSELECT.
+
+LOOP AT itab01.
+  WRITE: / itab01-surname, itab01-forename.
+ENDLOOP.
+
+***Internal table with Header Line
+**** INCLUDE STRUCTURE 1
+**DATA: BEGIN OF itab02 OCCURS 0.
+**        INCLUDE STRUCTURE itab01.
+**      DATA END OF itab02.
+**
+
+***Internal table with Header Line
+**** INCLUDE STRUCTURE 2
+**DATA: BEGIN OF itab03 OCCURS 0.
+**        INCLUDE STRUCTURE zemployees.
+**      DATA END OF itab03.
+**
+
+***Internal table with Header Line
+**** INCLUDE STRUCTURE 3
+**DATA: BEGIN OF itab04 OCCURS 0.
+**        INCLUDE STRUCTURE zemployees.
+***        INCLUDE STRUCTURE itab01.
+**        DATA              ee_count TYPE i.
+**DATA END OF itab04.
+**
+
+***Move-corresponding
+**SELECT * FROM zemployees.
+**  MOVE-CORRESPONDING zemployees TO itab01.
+**ENDSELECT.
+**
+**WRITE itab01-surname.
+*
+*
