@@ -31,9 +31,27 @@ SELECT * FROM zemployees.
   APPEND itab01.
 ENDSELECT.
 
+*LOOP AT itab01.
+*  WRITE: / itab01-surname, itab01-forename.
+*ENDLOOP.
+
+*WRITE: / '   '.
+*WRITE: / '--------------------'.
+
+** Loop through records if the internal table itab01 and print 2 columns
 LOOP AT itab01.
   WRITE: / itab01-surname, itab01-forename.
 ENDLOOP.
+
+WRITE: / '--------------------'.
+
+LOOP AT itab01.
+  IF itab01-surname = 'JONES'.
+    itab01-surname = '!!!  SMITH  !!!'.
+    MODIFY itab01.
+  ENDIF.
+ENDLOOP.
+
 
 ***Internal table with Header Line
 **** INCLUDE STRUCTURE 1
