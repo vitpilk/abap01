@@ -1,0 +1,39 @@
+*&---------------------------------------------------------------------*
+*& New way of defining internal tables
+*&---------------------------------------------------------------------*
+
+REPORT z_vp_itab_wa_01.
+
+TABLES: zemployees.
+
+******New way of defining internal tables
+
+* (1) Declare a line type we would use for the internal table
+TYPES: BEGIN OF line01_typ,
+         surname LIKE  zemployees-surname,
+         forename LIKE  zemployees-forename,
+         dob     LIKE zemployees-dob,
+       END OF line01_typ.
+
+* (2) Declare table TYPE for internal table
+TYPES itab01_typ TYPE STANDARD TABLE OF line01_typ.
+
+* (3) Declare the INTERNAL TABLE based on table type
+DATA itab01 TYPE itab01_typ.
+
+* (4) Declare work area (wa) we would use to populate INTERNAL TABLE
+DATA wa_itab01 TYPE line01_typ.
+
+*SELECT surname dob FROM zemployees
+*  INTO wa_itab01.
+*  APPEND wa_itab01 TO itab01.
+*ENDSELECT.
+
+* Array Fetch
+SELECT * FROM zemployees
+  INTO CORRESPONDING FIELDS OF TABLE itab01.
+
+* loop statement - only to print the results - the records of the Internal Table "itab01"
+LOOP AT itab01 INTO wa_itab01.
+  WRITE: / wa_itab01-surname, wa_itab01-forename, wa_itab01-dob.
+ENDLOOP.
