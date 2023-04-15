@@ -24,3 +24,39 @@ gwa_student-id    = 3. gwa_student-name  = 'JACK'. APPEND gwa_student TO it.
 LOOP AT it INTO gwa_student.
   WRITE:/ gwa_student-id, ' ---- ' , gwa_student-name.
 ENDLOOP.
+
+
+WRITE: / ' - - - - - - - - - - - - - - - - - - - - - -'.
+
+TYPES: BEGIN OF linetype,
+         f1 TYPE i,
+       END OF linetype.
+
+DATA: wa_itab TYPE linetype,
+      itab    TYPE TABLE OF linetype.
+
+wa_itab-f1 = 10. APPEND wa_itab TO itab. "CLEAR wa_itab.
+wa_itab-f1 = 20. APPEND wa_itab TO itab. "CLEAR wa_itab.
+wa_itab-f1 = 30. APPEND wa_itab TO itab. "CLEAR wa_itab.
+
+*LOOP AT itab INTO wa_itab.
+*  WRITE: / wa_itab-f1 color 4.
+*ENDLOOP.
+
+LOOP AT itab INTO wa_itab.
+  WRITE: / wa_itab-f1 color 3.
+ENDLOOP.
+
+WRITE: / ' - - - - - - - - - - - - - - - - - - - - - -'.
+
+DATA: BEGIN OF it1 OCCURS 10,
+        var1 TYPE i,
+      END OF it1.
+
+it1-var1 = 10. APPEND it1.
+it1-var1 = 20. APPEND it1.
+it1-var1 = 30. APPEND it1.
+
+LOOP AT it1.
+  WRITE:/ it1-var1 COLOR 5.
+ENDLOOP.
