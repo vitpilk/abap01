@@ -1,20 +1,14 @@
-*&---------------------------------------------------------------------*
-*& Report Z_TEST_ITAB_001
-*&---------------------------------------------------------------------*
-*&
-*&---------------------------------------------------------------------*
+**&---------------------------------------------------------------------*
+**& Report Z_TEST_ITAB_001
+**&---------------------------------------------------------------------*
 REPORT z_test_itab_001.
 
-*Data Types
 TYPES: BEGIN OF ty_student,
          id(5)    TYPE n,
          name(10) TYPE c,
        END OF ty_student.
 
 DATA: gwa_student TYPE ty_student.
-
-*Data Declaration
-*Referring to local data type
 DATA: it TYPE TABLE OF ty_student.
 
 gwa_student-id    = 1. gwa_student-name  = 'JOHN'. APPEND gwa_student TO it.
@@ -22,9 +16,8 @@ gwa_student-id    = 2. gwa_student-name  = 'PAUL'. APPEND gwa_student TO it.
 gwa_student-id    = 3. gwa_student-name  = 'JACK'. APPEND gwa_student TO it.
 
 LOOP AT it INTO gwa_student.
-  WRITE:/ gwa_student-id, ' ---- ' , gwa_student-name.
+  WRITE:/ gwa_student-id COLOR 6 , ' ---- ' , gwa_student-name COLOR 7.
 ENDLOOP.
-
 
 WRITE: / ' - - - - - - - - - - - - - - - - - - - - - -'.
 
@@ -39,15 +32,12 @@ wa_itab-f1 = 10. APPEND wa_itab TO itab. "CLEAR wa_itab.
 wa_itab-f1 = 20. APPEND wa_itab TO itab. "CLEAR wa_itab.
 wa_itab-f1 = 30. APPEND wa_itab TO itab. "CLEAR wa_itab.
 
-*LOOP AT itab INTO wa_itab.
-*  WRITE: / wa_itab-f1 color 4.
-*ENDLOOP.
-
 LOOP AT itab INTO wa_itab.
-  WRITE: / wa_itab-f1 color 3.
+  WRITE: / wa_itab-f1 COLOR 3.
 ENDLOOP.
 
-WRITE: / ' - - - - - - - - - - - - - - - - - - - - - -'.
+WRITE: / ' - - - - - - - - - - - - - - - - - - - - - - '.
+
 
 DATA: BEGIN OF it1 OCCURS 10,
         var1 TYPE i,
@@ -60,3 +50,14 @@ it1-var1 = 30. APPEND it1.
 LOOP AT it1.
   WRITE:/ it1-var1 COLOR 5.
 ENDLOOP.
+
+
+
+*
+
+*
+
+*
+*
+*
+*
