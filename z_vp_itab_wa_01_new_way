@@ -15,13 +15,13 @@ TYPES: BEGIN OF line01_typ,
          dob     LIKE zemployees-dob,
        END OF line01_typ.
 
-* (2) Declare table TYPE for internal table based on LINE TYPE.
+* (2) Declare TABLE TYPE for internal table based on LINE TYPE.
 TYPES itab01_typ TYPE STANDARD TABLE OF line01_typ.
 
 * (3) Declare the INTERNAL TABLE based on TABLE TYPE.
 DATA itab01 TYPE itab01_typ.
 
-* (4) Declare work area (wa) we would use to populate INTERNAL TABLE - based on LINE TYPE.
+* (4) Declare work area (wa) we would use (e.g. to populate INTERNAL TABLE) based on LINE TYPE.
 DATA wa_itab01 TYPE line01_typ.
 
 
