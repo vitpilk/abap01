@@ -1,0 +1,103 @@
+*&---------------------------------------------------------------------*
+*& Report z_int_tab_020
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT z_int_tab_020.
+
+*--------------------------------------------------------------
+TYPES: BEGIN OF alphatab_type,
+         cola TYPE string,
+         colb TYPE string,
+         colc TYPE string,
+       END OF alphatab_type.
+
+TYPES alphas TYPE STANDARD TABLE OF alphatab_type.
+DATA itab_alphas TYPE alphas.
+DATA wa_alphas TYPE alphatab_type.
+
+itab_alphas  = VALUE #(
+( cola = 'A' colb = 'B' colc = 'C' )
+( cola = 'D' colb = 'E' colc = 'F' )
+( cola = 'G' colb = 'H' colc = 'I' )
+).
+*--------------------------------------------------------------
+TYPES: BEGIN OF numtab_type,
+         col1 TYPE string,
+         col2 TYPE string,
+         col3 TYPE string,
+       END OF numtab_type.
+
+TYPES nums TYPE STANDARD TABLE OF numtab_type.
+DATA itab_nums TYPE nums.
+DATA wa_nums TYPE numtab_type.
+
+itab_nums  = VALUE #(
+( col1 = 1 col2 = 2 col3 = 3 )
+( col1 = 4 col2 = 5 col3 = 6 )
+( col1 = 7 col2 = 8 col3 = 9 )
+).
+
+*--------------------------------------------------------------
+*cl_demo_output=>write( itab_alphas ).
+*cl_demo_output=>display( itab_nums ).
+*--------------------------------------------------------------
+
+TYPES: BEGIN OF combined_data_type,
+         colx TYPE string,
+         coly TYPE string,
+         colz TYPE string,
+       END OF combined_data_type.
+TYPES combined_data TYPE STANDARD TABLE OF combined_data_type WITH EMPTY KEY.
+DATA itab_combo TYPE combined_data.
+DATA wa_combo TYPE combined_data_type.
+*--------------------------------------------------------------
+
+
+DATA t1 TYPE string.
+DATA indx TYPE i.
+indx = 1.
+
+*t1 = |{ itab_alphas[ indx ]-cola }{ itab_nums[ indx ]-col1 }|.
+t1 = |{ 'xx' }{ 'zz' }|.
+t1 = 'aa' && 'bb'.
+t1 = itab_alphas[ indx ]-cola && itab_nums[ indx ]-col1 .
+
+*cl_demo_output=>write( t1 ).
+cl_demo_output=>display( t1 ).
+
+WRITE:  itab_alphas[ 1 ]-cola,
+        itab_alphas[ 1 ]-colb,
+        itab_alphas[ 1 ]-colc, /
+        itab_alphas[ 2 ]-cola,
+        itab_alphas[ 2 ]-colb,
+        itab_alphas[ 2 ]-colc, /
+        itab_alphas[ 3 ]-cola,
+        itab_alphas[ 3 ]-colb,
+        itab_alphas[ 3 ]-colc
+        .
+
+
+**********************************************************************
+
+*
+
+*DATA : itab LIKE STANDARD TABLE OF scarr WITH HEADER LINE.
+*
+*FIELD-SYMBOLS: <wa>   TYPE ANY,
+*               <comp> TYPE ANY.
+*
+*SELECT SINGLE * INTO  itab FROM scarr.
+*APPEND itab.
+*
+*LOOP AT itab ASSIGNING <wa>.
+*  DO.
+*    ASSIGN COMPONENT sy-index OF STRUCTURE <wa> TO <comp>.
+*
+*    IF sy-subrc EQ 0.
+*    WRITE :/ sy-index , <comp>. "If sy-subrc eq 0 then sy-index indicates column index
+*    ELSE.
+*      EXIT.
+*    ENDIF.
+*  ENDDO.
+*ENDLOOP.
