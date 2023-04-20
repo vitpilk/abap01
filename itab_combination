@@ -1,0 +1,91 @@
+*CLASS zcl_itab_combination DEFINITION
+CLASS zcl_exercism_ex3_vp001 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+
+    INTERFACES if_oo_adt_classrun .
+
+    TYPES: BEGIN OF alphatab_type,
+             cola TYPE string,
+             colb TYPE string,
+             colc TYPE string,
+           END OF alphatab_type.
+    TYPES alphas TYPE STANDARD TABLE OF alphatab_type.
+
+    TYPES: BEGIN OF numtab_type,
+             col1 TYPE string,
+             col2 TYPE string,
+             col3 TYPE string,
+           END OF numtab_type.
+    TYPES nums TYPE STANDARD TABLE OF numtab_type.
+
+    TYPES: BEGIN OF combined_data_type,
+             colx TYPE string,
+             coly TYPE string,
+             colz TYPE string,
+           END OF combined_data_type.
+    TYPES combined_data TYPE STANDARD TABLE OF combined_data_type WITH EMPTY KEY.
+
+    METHODS perform_combination
+      IMPORTING
+        alphas             TYPE alphas
+        nums               TYPE nums
+      RETURNING
+        VALUE(combined_data) TYPE combined_data.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+
+ENDCLASS.
+
+CLASS zcl_exercism_ex3_vp001 IMPLEMENTATION.
+
+  METHOD perform_combination.
+
+        DATA(current_record) = 1.
+        Data(total_records) = lines( alphas ).
+
+        WHILE current_record <= total_records.
+
+          DATA(a) = alphas[ current_record ]-cola && nums[ current_record ]-col1.
+          DATA(b) = alphas[ current_record ]-colb && nums[ current_record ]-col2.
+          DATA(c) = alphas[ current_record ]-colc && nums[ current_record ]-col3.
+
+          APPEND VALUE #( colx = a coly = b colz = c ) TO combined_data.
+
+          current_record = current_record + 1.
+
+        ENDWHILE.
+
+  ENDMETHOD.
+
+  METHOD if_oo_adt_classrun~main.
+
+    out->write( '---------------------------------' ).
+
+    out->write(
+                perform_combination(
+
+                alphas  = VALUE #(
+                ( cola = 'A' colb = 'B' colc = 'C' )
+                ( cola = 'D' colb = 'E' colc = 'F' )
+                ( cola = 'G' colb = 'H' colc = 'I' )
+                )
+
+                nums  = VALUE #(
+                ( col1 = 1 col2 = 2 col3 = 3 )
+                ( col1 = 4 col2 = 5 col3 = 6 )
+                ( col1 = 7 col2 = 8 col3 = 9 )
+                )
+
+                )
+              ).
+
+    out->write( '---------------------------------' ).
+
+  ENDMETHOD.
+
+ENDCLASS.
